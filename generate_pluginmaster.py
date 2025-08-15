@@ -7,6 +7,8 @@ from sys import argv
 DOWNLOAD_URL = '{}/releases/download/v{}/latest.zip'
 GITHUB_RELEASES_API_URL = 'https://api.github.com/repos/{}/{}/releases/tags/v{}'
 
+GITHUB_USERNAME = 'PhibrXIV'
+
 DEFAULTS = {
     'IsHide': False,
     'IsTestingExclusive': False,
@@ -76,7 +78,7 @@ def add_extra_fields(manifests):
             for k in keys:
                 if k not in manifest:
                     manifest[k] = manifest[source]
-        manifest['DownloadCount'] = get_release_download_count('UnknownX7', manifest["InternalName"], manifest['AssemblyVersion'])
+        manifest['DownloadCount'] = get_release_download_count(GITHUB_USERNAME, manifest["InternalName"], manifest['AssemblyVersion'])
 
 def get_release_download_count(username, repo, id):
     r = requests.get(GITHUB_RELEASES_API_URL.format(username, repo, id))
