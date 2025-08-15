@@ -69,7 +69,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact
-          path: ./${{ inputs.project_dir }}/bin/${{ inputs.build_configuration }}/${{ inputs.platform }}/*
+          path: ./${{ inputs.project_dir }}/bin/${{ inputs.build_configuration }}/${{ inputs.platform }}/${{ inputs.plugin_folder }}/*
 
   deploy:
     needs: build
