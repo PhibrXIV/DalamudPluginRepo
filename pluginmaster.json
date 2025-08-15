@@ -6,7 +6,7 @@
         "Description": "Modified Orchestrion Plugin that includes Local File Playback",
         "Changelog": "",
         "InternalName": "OrchestrionPlus",
-        "AssemblyVersion": "2.2.0.15",
+        "AssemblyVersion": "2.2.0.16",
         "RepoUrl": "https://github.com/PhibrXIV/OrchestrionPlugin",
         "ApplicableVersion": "any",
         "CategoryTags": [
@@ -18,12 +18,12 @@
         "ImageUrls": [
             ""
         ],
-        "DownloadLinkInstall": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.15/latest.zip",
+        "DownloadLinkInstall": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.16/latest.zip",
         "IsHide": false,
         "IsTestingExclusive": false,
-        "DownloadLinkTesting": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.15/latest.zip",
-        "DownloadLinkUpdate": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.15/latest.zip",
+        "DownloadLinkTesting": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.16/latest.zip",
+        "DownloadLinkUpdate": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.16/latest.zip",
         "DownloadCount": 0,
-        "LastUpdate": "1755298631"
+        "LastUpdate": "1755300629"
     }
 ]
