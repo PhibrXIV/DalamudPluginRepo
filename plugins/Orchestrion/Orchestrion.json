@@ -18,7 +18,7 @@
   "ImageUrls": [
     ""
   ],
-  "IconUrl": "https://raw.githubusercontent.com/PhibrXIV/DalamudPluginRepo/master/plugins/OrchestrionPlugin/images/icon.png",
+  "IconUrl": "https://raw.githubusercontent.com/PhibrXIV/OrchestrionPlugin/master/images/icon.png",
   "Punchline": "Adds a simple front-end for browsing and changing the in-game BGM.",
   "Changelog": "",
   "AcceptsFeedback": true
