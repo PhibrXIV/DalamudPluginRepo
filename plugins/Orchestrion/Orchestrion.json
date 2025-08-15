@@ -1,7 +1,7 @@
 {
   "Author": "perchbird (modified by Phibr)",
   "Name": "Orchestrion Plugin++",
-  "InternalName": "Orchestrion",
+  "InternalName": "Orchestrion++",
   "AssemblyVersion": "2.2.0.14",
   "Description": "Modified Orchestrion Plugin that includes Local File Playback",
   "ApplicableVersion": "any",
