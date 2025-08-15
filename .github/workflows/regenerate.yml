@@ -1,34 +1,22 @@
 name: Regenerate PluginMaster
-
-on:
+on: 
   workflow_dispatch:
   push:
-  schedule:
-    - cron: '0 */12 * * *'
-
+    branches:
+    - master
 concurrency: regenerate
-
 jobs:
   generate:
+    name: Regenerate PluginMaster
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v2
         with:
             python-version: '3.8'
-            cache: 'pip'
-
+      - uses: actions/checkout@v2
       - name: Generate PluginMaster
-        run: |
-          pip install -r requirements.txt
-          python generate_pluginmaster.py
-
-      - name: Commit PluginMaster
-        uses: EndBug/add-and-commit@v9
+        run: python generate_pluginmaster.py
+      - uses: EndBug/add-and-commit@v7
         with:
           author_name: GitHub Action
           author_email: github-actions[bot]@users.noreply.github.com
