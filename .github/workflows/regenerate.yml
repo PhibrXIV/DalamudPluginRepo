@@ -3,7 +3,12 @@ name: Regenerate PluginMaster
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [ master, main ]
+    paths:
+      - 'plugins/**.json'
+      - 'generate_pluginmaster.py'
+      - 'requirements.txt'
+      - '.github/workflows/regenerate.yml'
 
 permissions:
   contents: write
@@ -14,6 +19,7 @@ concurrency:
 
 jobs:
   generate:
+    if: ${{ github.actor != 'github-actions[bot]' }}
     name: Regenerate PluginMaster
     runs-on: ubuntu-latest
     steps:
