@@ -65,30 +65,28 @@ jobs:
       - name: Build
         run: msbuild ${{ inputs.solution_name }}.sln /p:Configuration=${{ inputs.build_configuration }} /p:Platform=${{ inputs.platform }}
 
-      - name: Package plugin
+      # NEW: Install and run the official packager
+      - name: Install DalamudPackager
+        shell: pwsh
+        run: dotnet tool install -g DalamudPackager
+
+      - name: Pack with DalamudPackager
         shell: pwsh
         run: |
           $out  = Join-Path "${{ inputs.project_dir }}" "bin/${{ inputs.build_configuration }}/${{ inputs.platform }}"
           $dest = Join-Path $out "${{ inputs.plugin_folder }}"
           New-Item -ItemType Directory -Force -Path $dest | Out-Null
 
-          # Copy essentials
-          Copy-Item "$out\*.dll" -Destination $dest -Force
-          Copy-Item "$out\*.pdb" -Destination $dest -Force -ErrorAction SilentlyContinue
-          Copy-Item "$out\*.json" -Destination $dest -Force
-          Copy-Item "$out\*.csv" -Destination $dest -Force -ErrorAction SilentlyContinue
+          # Run the packager against the csproj
+          & "$env:USERPROFILE\.dotnet\tools\DalamudPackager.exe" pack `
+            -p "${{ inputs.project_dir }}/${{ inputs.project_dir }}.csproj" `
+            -o $dest
 
-          # Ensure the expected manifest filename exists (Orchestrion.json)
-          $expected = Join-Path $dest "${{ inputs.internal_name }}.json"
-          if (-not (Test-Path $expected)) {
-            $manifest = Get-ChildItem -Path $dest -Filter *.json | Select-Object -First 1
-            if ($manifest) { Copy-Item $manifest.FullName $expected -Force }
+          # Normalize: ensure latest.zip exists (some setups emit a versioned zip as well)
+          if (-not (Test-Path (Join-Path $dest 'latest.zip'))) {
+            $zip = Get-ChildItem -Path $dest -Filter *.zip | Select-Object -First 1
+            if ($zip) { Copy-Item $zip.FullName (Join-Path $dest 'latest.zip') -Force }
           }
-
-          # Create latest.zip
-          $zip = Join-Path $dest "latest.zip"
-          if (Test-Path $zip) { Remove-Item $zip -Force }
-          Compress-Archive -Path "$dest\*" -DestinationPath $zip
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
@@ -113,6 +111,20 @@ jobs:
         with:
           name: artifact
           path: plugins/${{ inputs.internal_name }}
+
+      # NEW: Normalize manifest name and set RepoUrl to the plugin-list repo
+      - name: Normalize manifest and RepoUrl
+        shell: pwsh
+        run: |
+          $dir = "plugins/${{ inputs.internal_name }}"
+          $manifest = Join-Path $dir "${{ inputs.internal_name }}.json"
+          if (-not (Test-Path $manifest)) {
+            $found = Get-ChildItem -Path $dir -Filter *.json | Select-Object -First 1
+            if ($found) { Copy-Item $found.FullName $manifest -Force }
+          }
+          $json = Get-Content -Raw -Path $manifest | ConvertFrom-Json
+          $json.RepoUrl = "https://github.com/${{ inputs.personal_plugin_repo }}"
+          $json | ConvertTo-Json -Depth 100 | Set-Content -Path $manifest -Encoding UTF8
 
       - name: Extract version from manifest
         id: version
