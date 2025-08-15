@@ -18,6 +18,16 @@ on:
       personal_plugin_repo_branch:
         type: string
         required: true
+      plugin_folder:
+        type: string
+        required: true
+      project_dir:
+        type: string
+        required: true
+      platform:
+        type: string
+        required: true
+        default: x64
     secrets:
       PAT:
         required: true
@@ -50,12 +60,13 @@ jobs:
           Expand-Archive -Force latest.zip "$env:AppData\XIVLauncher\addon\Hooks\dev\"
 
       - name: Build
-        run: msbuild ${{ inputs.solution_name }}.sln /p:Configuration=${{ inputs.build_configuration }}
+        run: msbuild ${{ inputs.solution_name }}.sln /p:Configuration=${{ inputs.build_configuration }} /p:Platform=${{ inputs.platform }}
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ./bin/${{ inputs.build_configuration }}/${{ inputs.solution_name }}/*
+          name: artifact
+          path: ./${{ inputs.project_dir }}/bin/${{ inputs.build_configuration }}/${{ inputs.platform }}/${{ inputs.plugin_folder }}/*
 
   deploy:
     needs: build
