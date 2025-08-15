@@ -1,25 +1,45 @@
 name: Regenerate PluginMaster
-on: 
+
+on:
   workflow_dispatch:
   push:
-    branches:
-    - master
-concurrency: regenerate
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: regenerate-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate:
     name: Regenerate PluginMaster
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-            python-version: '3.8'
-      - uses: actions/checkout@v2
-      - name: Generate PluginMaster
-        run: |
-          pip install -r requirements.txt
-          python generate_pluginmaster.py
-      - uses: EndBug/add-and-commit@v7
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate pluginmaster.json
+        env:
+          # If you set this in repo/org/proj settings, GitHub API requests get higher limits.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python generate_pluginmaster.py
+
+      - name: Commit pluginmaster.json (if changed)
+        uses: EndBug/add-and-commit@v9
         with:
+          add: pluginmaster.json
           author_name: GitHub Action
           author_email: github-actions[bot]@users.noreply.github.com
           message: Regenerate PluginMaster
