@@ -1,33 +1,6 @@
 [
     {
         "Author": "perchbird (modified by Phibr)",
-        "Name": "Orchestrion Plugin++",
-        "Punchline": "Adds a simple front-end for browsing and changing the in-game BGM.",
-        "Description": "Modified Orchestrion Plugin that includes Local File Playback",
-        "Changelog": "",
-        "InternalName": "Orchestrion",
-        "AssemblyVersion": "2.2.0.14",
-        "RepoUrl": "https://github.com/PhibrXIV/OrchestrionPlugin",
-        "ApplicableVersion": "any",
-        "CategoryTags": [
-            "bgm",
-            "music"
-        ],
-        "DalamudApiLevel": 13,
-        "IconUrl": "https://raw.githubusercontent.com/PhibrXIV/OrchestrionPlugin/master/images/icon.png",
-        "ImageUrls": [
-            ""
-        ],
-        "DownloadLinkInstall": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.14/latest.zip",
-        "IsHide": false,
-        "IsTestingExclusive": false,
-        "DownloadLinkTesting": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.14/latest.zip",
-        "DownloadLinkUpdate": "https://github.com/PhibrXIV/OrchestrionPlugin/releases/download/v2.2.0.14/latest.zip",
-        "DownloadCount": 1,
-        "LastUpdate": "1755296501"
-    },
-    {
-        "Author": "perchbird (modified by Phibr)",
         "Name": "Orchestrion Plugin + Local",
         "Punchline": "Adds a simple front-end for browsing and changing the in-game BGM.",
         "Description": "Modified Orchestrion Plugin that includes Local File Playback",
