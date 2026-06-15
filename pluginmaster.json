@@ -13,7 +13,7 @@
             "bgm",
             "music"
         ],
-        "DalamudApiLevel": 13,
+        "DalamudApiLevel": 15,
         "IconUrl": "https://raw.githubusercontent.com/PhibrXIV/OrchestrionPlugin/master/images/icon.png",
         "ImageUrls": [
             ""
